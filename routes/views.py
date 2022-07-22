@@ -2,19 +2,16 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import json
 
+from utils import *
+
 # Create your views here.
 def index(request):
     # return HttpResponse('Hello from Python!')
     return render(request, "index.html")
 
 def routes(request):
-    import psycopg2
-
-    connection = psycopg2.connect(user="kscyvqirfqjevw",
-                                password="2037f31777df5afc16122fd3fc6a2e8b98a189dba7f5cbfd124977f2d99f9980",
-                                host="ec2-34-235-198-25.compute-1.amazonaws.com",
-                                port="5432",
-                                database="d2no4bighl8610")
+    
+    connection = connect_database()
 
     cursor = connection.cursor()
     cursor.execute("SELECT * FROM routes_rutas ORDER BY id;")
@@ -67,13 +64,8 @@ def routes(request):
     return HttpResponse(json.dumps(rutas, ensure_ascii=False), content_type="application/json")
 
 def route_id(request):
-    import psycopg2
 
-    connection = psycopg2.connect(user="kscyvqirfqjevw",
-                                password="2037f31777df5afc16122fd3fc6a2e8b98a189dba7f5cbfd124977f2d99f9980",
-                                host="ec2-34-235-198-25.compute-1.amazonaws.com",
-                                port="5432",
-                                database="d2no4bighl8610")
+    connection = connect_database()
 
     cursor = connection.cursor()
 
@@ -137,13 +129,7 @@ def route_id(request):
     return HttpResponse(json.dumps(ruta, ensure_ascii=False), content_type="application/json")
 
 def poi(request):
-    import psycopg2
-
-    connection = psycopg2.connect(user="kscyvqirfqjevw",
-                                password="2037f31777df5afc16122fd3fc6a2e8b98a189dba7f5cbfd124977f2d99f9980",
-                                host="ec2-34-235-198-25.compute-1.amazonaws.com",
-                                port="5432",
-                                database="d2no4bighl8610")
+    connection = connect_database()
 
     cursor = connection.cursor()
     cursor.execute("SELECT * FROM routes_poi ORDER BY id;")
@@ -168,13 +154,7 @@ def poi(request):
     return HttpResponse(json.dumps(points, ensure_ascii=False), content_type="application/json")
 
 def poi_id(request):
-    import psycopg2
-
-    connection = psycopg2.connect(user="kscyvqirfqjevw",
-                                password="2037f31777df5afc16122fd3fc6a2e8b98a189dba7f5cbfd124977f2d99f9980",
-                                host="ec2-34-235-198-25.compute-1.amazonaws.com",
-                                port="5432",
-                                database="d2no4bighl8610")
+    connection = connect_database()
 
     id = int(request.GET.get('id', '1'))
     cursor = connection.cursor()
@@ -206,50 +186,3 @@ def poi_id(request):
         connection.close()
 
     return HttpResponse(json.dumps(point, ensure_ascii=False), content_type="application/json")
-
-# def populate(request):
-#     import psycopg2
-#     import pandas as pd
-
-#     connection = psycopg2.connect(user="kscyvqirfqjevw",
-#                                 password="2037f31777df5afc16122fd3fc6a2e8b98a189dba7f5cbfd124977f2d99f9980",
-#                                 host="ec2-34-235-198-25.compute-1.amazonaws.com",
-#                                 port="5432",
-#                                 database="d2no4bighl8610")
-#     cursor = connection.cursor()
-
-#     df_routes = pd.read_csv('routes/data/routes.csv', index_col=0)
-#     insert_query = f"""INSERT INTO routes_rutas(name,
-#                 esp_resume,
-#                 eng_resume,
-#                 val_resume,
-#                 duration,
-#                 dificulty,
-#                 start,
-#                 end_point,
-#                 image,
-#                 url,
-#                 transport,
-#                 type,
-#                 esp_description,
-#                 val_description,
-#                 eng_description) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
-#     cursor.executemany(insert_query, df_routes.values)
-#     connection.commit()
-
-#     df_poi = pd.read_csv('routes/data/poi.csv', index_col=0)
-#     insert_query2 = f"""INSERT INTO routes_poi(route_id,
-#                 name,
-#                 lat,
-#                 lon,
-#                 val_description,
-#                 cast_description,
-#                 eng_description) values (%s,%s,%s,%s,%s,%s,%s)"""
-
-#     cursor.executemany(insert_query2, df_poi.values)
-#     connection.commit()
-
-#     if (connection):
-#         cursor.close()
-#         connection.close()
-#     return HttpResponse(["Maldito Friki"])
