@@ -212,7 +212,7 @@ def post_user(request):
                 time,
                 type,
                 price,
-                dificulty,
+                difficulty,
                 companions,
                 transport,
                 time_stamp) values (%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
@@ -227,4 +227,4 @@ def post_user(request):
         cursor.close()
         connection.close()
 
-    return HttpResponse(json.dumps(user_id, ensure_ascii=False), content_type="application/json")
+    return HttpResponse([user_id])
