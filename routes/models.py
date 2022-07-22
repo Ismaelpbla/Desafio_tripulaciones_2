@@ -38,4 +38,4 @@ class Users(models.Model):
     difficulty = models.CharField(max_length=20, default='None')
     companions = models.CharField(max_length=20, default='None')
     transport = models.CharField(max_length=20, default='None')
-    time_stamp = models.TimeField()
+    time_stamp = models.CharField(max_length=200, default='None')

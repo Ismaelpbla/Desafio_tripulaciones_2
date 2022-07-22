@@ -201,7 +201,7 @@ def post_user(request):
     difficulty = request.GET.get('difficulty', 'None')
     companions = request.GET.get('companions', 'None')
     transport = request.GET.get('transport', 'None')
-    time_stamp = str(datetime.datetime.now().time()).replace(':','').replace('.','')
+    time_stamp = str(datetime.datetime.now().time())
 
     connection = connect_database(user, password, host, port, database)
     cursor = connection.cursor()
