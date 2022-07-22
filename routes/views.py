@@ -217,8 +217,8 @@ def post_user(request):
     values_to_insert = (age, gender, time, type, price, difficulty, companions, transport, time_stamp)
     cursor.execute(insert_query, values_to_insert)
     connection.commit()
-    cursor = connection.cursor()
-    cursor.execute(f"""SELECT id FROM routes_users WHERE time_stamp = {time_stamp};""")
+    # cursor = connection.cursor()
+    # cursor.execute(f"""SELECT id FROM routes_users WHERE time_stamp = {time_stamp};""")
     user_id = cursor.fetchall()
     
 
@@ -226,4 +226,4 @@ def post_user(request):
         cursor.close()
         connection.close()
 
-    return HttpResponse([user_id])
+    return HttpResponse(json.dumps({'user_id':user_id[0]}, ensure_ascii=False), content_type="application/json")
