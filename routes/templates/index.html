@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="jumbotron text-center">
+  <div class="container">
+    <a href="/" class="lang-logo">
+      <img src="{% static 'routes.jpg'%}">
+    </a>
+    <h1>APP para la obtención de Rutas</h1>
+    <p>Encuentra las mejores rutas de Valencia.</p>
+  </div>
+</div>
+<div class="container">
+  <div class="alert alert-info text-center" role="alert">
+  </div> <!-- row -->
+</div>
+{% endblock %}
