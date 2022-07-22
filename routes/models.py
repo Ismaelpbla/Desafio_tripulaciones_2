@@ -29,31 +29,14 @@ class Poi(models.Model):
     eng_description = models.CharField(max_length=7000,  default='None')
     images = models.CharField(max_length=2500, default='None')
 
-# class Rutas(models.Model):
-#     # route_id = models.PositiveIntegerField() 
-#     name = models.CharField(max_length=200, default='None')
-#     resume = models.CharField(max_length=200, default='None')
-#     difficulty = models.CharField(max_length=200, default='None')
-#     duration = models.PositiveIntegerField()
-#     startingPoint = models.CharField(max_length=200, default='None')
-#     endingPoint = models.CharField(max_length=200, default='None')
-#     description = models.CharField(max_length=200, default='None')
-#     image = models.CharField(max_length=200, default='None')
-#     transport = models.CharField(max_length=200, default='None')
-#     type = models.CharField(max_length=200, default='None')
-
-#     def __str__(self):
-#         return self.name
-
-# class Poi(models.Model):
-#     poi_id = models.PositiveIntegerField()
-#     name = models.CharField(max_length=200, default='None')
-#     description = models.CharField(max_length=200, default='None')
-#     image = models.CharField(max_length=200, default='None')
-#     latitude = models.FloatField()
-#     longitude = models.FloatField()
-#     route = models.ForeignKey(Rutas, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.name
+class Users(models.Model):
+    age = models.PositiveIntegerField()
+    gender = models.CharField(max_length=20, default='None')
+    time = models.PositiveIntegerField()
+    type = models.CharField(max_length=20, default='None')
+    price = models.CharField(max_length=20, default='None')
+    difficulty = models.CharField(max_length=20, default='None')
+    companions = models.CharField(max_length=20, default='None')
+    transport = models.CharField(max_length=20, default='None')
+    time_stamp = models.DateTimeField()
     

@@ -187,3 +187,44 @@ def poi_id(request):
         connection.close()
 
     return HttpResponse(json.dumps(point, ensure_ascii=False), content_type="application/json")
+
+def post_user(request):
+
+    import numpy as np
+    import datetime
+
+    age = request.GET.get('age', '0')
+    gender = request.GET.get('gender', 'Noe')
+    time = request.GET.get('time', '0')
+    type = request.GET.get('type', 'None')
+    price = request.GET.get('price', 'None')
+    difficulty = request.GET.get('difficulty', 'None')
+    companions = request.GET.get('companions', 'None')
+    transport = request.GET.get('transport', 'None')
+    time_stamp = datetime.datetime.now()
+    
+    user_values = [age, gender, time, type, price, difficulty, companions, transport,time_stamp]
+
+    connection = connect_database(user, password, host, port, database)
+    cursor = connection.cursor()
+    insert_query = f"""INSERT INTO routes_users(age,
+                gender,
+                time,
+                type,
+                price,
+                dificulty,
+                companions,
+                transport,
+                time_stamp) values (%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
+
+    cursor.executemany(insert_query, np.array(user_values))
+
+    cursor = connection.cursor()
+    cursor.execute(f"""SELECT id FROM routes_users WHERE time_stamp = {time_stamp} ;""")
+    user_id = cursor.fetchall()
+
+    if (connection):
+        cursor.close()
+        connection.close()
+
+    return HttpResponse(json.dumps(user_id, ensure_ascii=False), content_type="application/json")

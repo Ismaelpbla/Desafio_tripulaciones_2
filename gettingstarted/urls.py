@@ -21,4 +21,5 @@ urlpatterns = [
     path("getRouteById/", routes.views.route_id, name="route"),
     path("getPoi/", routes.views.poi, name="poi"),
     path("getPoiById/", routes.views.poi_id, name="poi_id"),
+    path("postUser", routes.views.post_user, name="user"),
 ]
