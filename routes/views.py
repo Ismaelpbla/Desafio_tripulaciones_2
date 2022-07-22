@@ -201,9 +201,7 @@ def post_user(request):
     difficulty = request.GET.get('difficulty', 'None')
     companions = request.GET.get('companions', 'None')
     transport = request.GET.get('transport', 'None')
-    time_stamp = datetime.datetime.now()
-    
-    user_values = [age, gender, time, type, price, difficulty, companions, transport,time_stamp]
+    time_stamp = str(datetime.datetime.now().time()).replace(':','').replace('.','')
 
     connection = connect_database(user, password, host, port, database)
     cursor = connection.cursor()
@@ -215,13 +213,14 @@ def post_user(request):
                 difficulty,
                 companions,
                 transport,
-                time_stamp) values (%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
-
-    cursor.executemany(insert_query, np.array(user_values))
-
+                time_stamp) values (%s,%s,%s,%s,%s,%s,%s,%s,%s) RETURNING id"""
+    values_to_insert = (age, gender, time, type, price, difficulty, companions, transport, time_stamp)
+    cursor.execute(insert_query, values_to_insert)
+    connection.commit()
     cursor = connection.cursor()
-    cursor.execute(f"""SELECT id FROM routes_users WHERE time_stamp = {time_stamp} ;""")
+    cursor.execute(f"""SELECT id FROM routes_users WHERE time_stamp = {time_stamp};""")
     user_id = cursor.fetchall()
+    
 
     if (connection):
         cursor.close()
