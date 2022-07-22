@@ -1,12 +1,10 @@
 import psycopg2
 import pandas as pd
+from routes.utils import *
+from routes.db_settings import *
 
 def populate():
-    connection = psycopg2.connect(user="kscyvqirfqjevw",
-                                password="2037f31777df5afc16122fd3fc6a2e8b98a189dba7f5cbfd124977f2d99f9980",
-                                host="ec2-34-235-198-25.compute-1.amazonaws.com",
-                                port="5432",
-                                database="d2no4bighl8610")
+    connection = connect_database(user, password, host, port, database)
 
     cursor = connection.cursor()
 
