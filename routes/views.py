@@ -2,7 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import json
 
-from utils import *
+from routes.utils import *
+from routes.db_settings import *
 
 # Create your views here.
 def index(request):
@@ -11,7 +12,7 @@ def index(request):
 
 def routes(request):
     
-    connection = connect_database()
+    connection = connect_database(user, password, host, port, database)
 
     cursor = connection.cursor()
     cursor.execute("SELECT * FROM routes_rutas ORDER BY id;")
@@ -65,7 +66,7 @@ def routes(request):
 
 def route_id(request):
 
-    connection = connect_database()
+    connection = connect_database(user, password, host, port, database)
 
     cursor = connection.cursor()
 
@@ -129,7 +130,7 @@ def route_id(request):
     return HttpResponse(json.dumps(ruta, ensure_ascii=False), content_type="application/json")
 
 def poi(request):
-    connection = connect_database()
+    connection = connect_database(user, password, host, port, database)
 
     cursor = connection.cursor()
     cursor.execute("SELECT * FROM routes_poi ORDER BY id;")
@@ -154,7 +155,7 @@ def poi(request):
     return HttpResponse(json.dumps(points, ensure_ascii=False), content_type="application/json")
 
 def poi_id(request):
-    connection = connect_database()
+    connection = connect_database(user, password, host, port, database)
 
     id = int(request.GET.get('id', '1'))
     cursor = connection.cursor()

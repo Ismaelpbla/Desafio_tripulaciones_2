@@ -1,6 +1,3 @@
-from db_settings import *
-
-
 def connect_database(user, password, host, port, database):
     import psycopg2
 
